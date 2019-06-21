@@ -1,3 +1,20 @@
+<%= will_paginate @products, previous_label: h("<"), next_label: h(">") %>
+
+<!-- or custom pagination -->
+<% if @products.previous_page %>
+  <%= link_to "< Previous", params.merge(page: @products.previous_page) %>
+<% end %>
+Page <%= @products.current_page %> of <%= @products.total_pages %>
+<% if @products.next_page %>
+  <%= link_to "Next >", params.merge(page: @products.next_page) %>
+<% end %>
+
+
+
+
+
+
+
 <% @places.each do |place| %>
   <div class="booyah-box col-10 offset-1">
     <h1><%= place.name %></h1>
@@ -6,3 +23,4 @@
   </div>
 
 <% end %>
+
