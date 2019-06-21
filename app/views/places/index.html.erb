@@ -1,12 +1,12 @@
-<%= will_paginate @products, previous_label: h("<"), next_label: h(">") %>
+<%= will_paginate @places, previous_label: h("<"), next_label: h(">") %>
 
 <!-- or custom pagination -->
-<% if @products.previous_page %>
-  <%= link_to "< Previous", params.merge(page: @products.previous_page) %>
+<% if @places.previous_page %>
+  <%= link_to "< Previous", params.merge(page: @places.previous_page) %>
 <% end %>
-Page <%= @products.current_page %> of <%= @products.total_pages %>
-<% if @products.next_page %>
-  <%= link_to "Next >", params.merge(page: @products.next_page) %>
+Page <%= @places.current_page %> of <%= @places.total_pages %>
+<% if @places.next_page %>
+  <%= link_to "Next >", params.merge(page: @places.next_page) %>
 <% end %>
 
 
