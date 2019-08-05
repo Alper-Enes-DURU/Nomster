@@ -67,26 +67,26 @@
   <% end %>
 </div>
 
-<div>
+<div class="add_caption_and_photo">
   <%= simple_form_for @photo, url: place_photos_path(@place) do |f| %>
   <%= f.input :caption %> 
   <%= f.input :picture %>
   <%= f.submit "Add a Caption", class: 'btn btn-primary' %>
 </div>
 
-<div>
+<div class="show-pictures-and-comments">
     <% @place.photos.each do |photo| %>
       <blockquote>
-      <%= image_tag photo.picture, class: 'show-image-size' %>
+      <%= image_tag photo.picture.to_s, class: 'show-image-size' %>
       <p><% if photo.caption.present? %>
               <%= photo.caption %></p>
     <% end %>
-  
-      <small><%= photo.user.email %></small>
+
       </blockquote> 
   <% end %>
 </div>
 <% end %>
+
 
 
 
