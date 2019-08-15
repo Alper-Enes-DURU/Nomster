@@ -3,69 +3,69 @@
   <i><%= @place.address %></i>
   <br/><br/>
   <p><%= @place.description %></p> 
- 
- <% if @place.latitude.present? && @place.longitude.present? %>
-    <script>
 
-      function initMap() {
-        var myLatLng = {lat: <%= @place.latitude %>, lng: <%= @place.longitude %>};
+  <% if @place.latitude.present? && @place.longitude.present? %>
+  <script>
 
-        var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 12,
-          center: myLatLng
-        });
+    function initMap() {
+      var myLatLng = {lat: <%= @place.latitude %>, lng: <%= @place.longitude %>};
 
-        var marker = new google.maps.Marker({
-          position: myLatLng,
-          map: map,
-          title: 'Hello World!'
-        });
-      }
-    </script>
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBoaxkoTvT1DNvnldP45BXGM0uEVrRZPKg&callback=initMap">
-    </script>
+      var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 12,
+        center: myLatLng
+      });
 
-    <div id="map"></div>
+      var marker = new google.maps.Marker({
+        position: myLatLng,
+        map: map,
+        title: 'Hello World!'
+      });
+    }
+  </script>
+  <script async defer
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBoaxkoTvT1DNvnldP45BXGM0uEVrRZPKg&callback=initMap">
+</script>
 
-  <% end %>
+<div id="map"></div>
 
-  <br />
+<% end %>
 
-  <div class="float-right">
-    <% if current_user && current_user == @place.user %>
-      <%= link_to 'Edit', edit_place_path(@place), class: 'btn btn-primary' %>
-      <%= link_to 'Destroy', place_path(@place), method: :delete, data: {confirm: 'Are you sure you want to delete this?'},class: 'btn btn-danger' %>
-    <% end %>   
-  </div>
+<br />
 
-  <div class="clear"></div>
-  <%= simple_form_for @comment, url: place_comments_path(@place) do |f| %>
-    <%= f.input :message %>
-    <%= f.input :rating, as: :select, collection: Comment::RATINGS %>
-    <%= f.submit "Add a Comment", class: 'btn btn-primary' %>
-  <% end %>
+<div class="float-right">
+  <% if current_user && current_user == @place.user %>
+    <%= link_to 'Edit', edit_place_path(@place), class: 'btn btn-primary' %>
+    <%= link_to 'Destroy', place_path(@place), method: :delete, data: {confirm: 'Are you sure you want to delete this?'},class: 'btn btn-danger' %>
+  <% end %>   
+</div>
+
+<div class="clear"></div>
+
+<%= simple_form_for @comment, url: place_comments_path(@place) do |f| %>
+  <%= f.input :message %>
+  <%= f.input :rating, as: :select, collection: Comment::RATINGS %>
+  <%= f.submit "Add a Comment", class: 'btn btn-primary' %>
+<% end %>
 
 </div>
 
-
-
-  
 <div class="clear"></div>
 
-<div class="row">
-  <% @place.comments.each do |comment| %>
+<% if @place.comments.present? %>
+  <div class="row">
+    <% @place.comments.each do |comment| %>
     <div class="col-12 col-sm-6">
       <blockquote>
         <% if comment.humanized_rating.present? %>
-          <b><%= comment.humanized_rating %></b> -
+        <b><%= comment.humanized_rating %></b> -
         <% end %>
         <%= comment.message %>
         <small><%= comment.user.email %></small>
       </blockquote>
     </div>
-  <% end %>
-</div>
+    <% end %>
+  </div>
+<% end %>
 
 <div class="add_caption_and_photo">
   <%= simple_form_for @photo, url: place_photos_path(@place) do |f| %>
@@ -74,17 +74,21 @@
   <%= f.submit "Add a Caption", class: 'btn btn-primary' %>
 </div>
 
-<div class="show-pictures-and-comments">
+<% if @place.photos.present? %>
+  <div class="show-pictures-and-comments">
     <% @place.photos.each do |photo| %>
-      <blockquote>
+    <blockquote>
       <%= image_tag photo.picture.to_s, class: 'show-image-size' %>
-      <p><% if photo.caption.present? %>
-              <%= photo.caption %></p>
+      <p>
+        <% if photo.caption.present? %>
+        <%= photo.caption %>
+        <% end %>  
+      </p>
+    </blockquote> 
     <% end %>
+  </div>
+<% end %>
 
-      </blockquote> 
-  <% end %>
-</div>
 <% end %>
 
 
