@@ -61,6 +61,17 @@
         <% end %>
         <%= comment.message %>
         <small><%= comment.user.email %></small>
+
+          <div class="float-right">
+            <% if current_user && current_user == @place.user %>
+         
+              <%= link_to 'Destroy', place_comment_path(@comment), method: :delete, data: {confirm: 'Are you sure you want to delete this?'},class: 'btn btn-danger' %>
+
+            <% end %>   
+          </div>
+
+
+
       </blockquote>
     </div>
     <% end %>
