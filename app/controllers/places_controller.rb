@@ -49,14 +49,15 @@ class PlacesController < ApplicationController
 
   def destroy
     @place = Place.find(params[:id])
+    @comment = @place.comments
+    @photo = @place.photos
 
     if @place.user != current_user
       return render plain: 'Not Allowed', status: :forbidden
     end
-    
- #   @place.comments.destroy
- #   @place.photos.destroy
-    
+
+    @comment.destroy_all
+    @photo.destroy_all
     @place.destroy
 
     redirect_to root_path
