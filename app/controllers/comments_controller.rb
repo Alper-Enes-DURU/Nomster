@@ -8,17 +8,15 @@ class CommentsController < ApplicationController
   end
 
   def destroy
+    @comment = Comment.find(params[:id])
+    @place = Place.find(params[:place_id])
 
-    @comment = Comments.find(:id)
+    if @place.user != current_user
+      return render plain: 'Not Allowed', status: :forbidden
+    end
 
-  #  @comment = @place.find(params[:id])
     @comment.destroy
-#    if @comment.user != current_user
-#      return render plain: 'Not Allowed', status: :forbidden
-#    end
-
-#    @comment.destroy
-    redirect_to place_path
+    redirect_to root_path
   end
 
   private
