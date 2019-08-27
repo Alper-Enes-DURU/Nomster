@@ -62,7 +62,7 @@
           <%= comment.message %>
           <small><%= comment.user.email %></small>
           <div class="float-right">         
-             <% if current_user && current_user == @place.user %>
+             <% if current_user && current_user == comment.user %>
               <%= link_to 'Destroy', [comment.place, comment], method: :delete, data: {confirm: 'Are you sure you want to delete this?'},class: 'btn btn-danger' %>
               <% end %>             
           </div>
@@ -89,7 +89,7 @@
           <%= photo.caption %>
           <% end %>  
         </p>
-        <% if current_user && current_user == @place.user %>
+        <% if current_user && current_user.id == photo.user_id %>
           <%= link_to 'Destroy', [photo.place, photo], method: :delete, data: {confirm: 'Are you sure you want to delete this?'},class: 'btn btn-danger' %>
         <% end %>
       </blockquote> 

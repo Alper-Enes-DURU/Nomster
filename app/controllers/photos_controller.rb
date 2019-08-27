@@ -11,9 +11,8 @@ class PhotosController < ApplicationController
 
     def destroy
       @photo = Photo.find(params[:id])
-      @place = Place.find(params[:place_id])
 
-      if @place.user != current_user
+      if @photo.user != current_user
         return render plain: 'Not Allowed', status: :forbidden
       end
 
